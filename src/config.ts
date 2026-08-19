@@ -141,10 +141,10 @@ export const themeConfig: ThemeConfig = {
     },
     // google analytics
     // https://analytics.google.com
-    googleAnalyticsID: '',
+    googleAnalyticsID: 'G-4KVBP7E0E3',
     // umami analytics
     // https://cloud.umami.is
-    umamiAnalyticsID: '',
+    umamiAnalyticsID: 'f96a4ca3-66da-465b-a6aa-527f44a719a4',
     // folo verification
     // https://folo.is/
     folo: {
