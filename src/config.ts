@@ -14,11 +14,10 @@ export const themeConfig: ThemeConfig = {
     // author name
     author: 'Brian Kao',
     // site url
-    // TODO: 綁定 briankao.com 後改回 'https://briankao.com'，base 改回 '/'
-    url: 'https://briankao1222.github.io',
+    url: 'https://blog.briankao.com',
     // base path
     // root directory for all pages and assets
-    base: '/BLOG', // e.g., '/blog', '/docs'
+    base: '/', // e.g., '/blog', '/docs'
     // favicon url
     // recommended formats: svg, png or ico
     favicon: '/icons/favicon.svg', // or https://example.com/favicon.svg
