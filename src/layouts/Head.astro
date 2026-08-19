@@ -18,7 +18,7 @@ const currentUI = ui[currentLang as keyof typeof ui] ?? {}
 const lang = currentLang === defaultLocale ? '' : `${currentLang}/`
 
 // Site Configuration
-const { title, subtitle, description, i18nTitle, author, favicon } = themeConfig.site
+const { title, subtitle, description, i18nTitle, author } = themeConfig.site
 const { mode: defaultMode, light: { background: lightMode }, dark: { background: darkMode } } = themeConfig.color
 const { katex: katexEnabled, reduceMotion } = themeConfig.global
 const { verification = {}, twitterID = '', googleAnalyticsID = '', umamiAnalyticsID = '', apiflashKey = '' } = themeConfig.seo ?? {}
@@ -45,9 +45,11 @@ const pageImage = postSlug
 <!-- Basic Info -->
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-{favicon.toLowerCase().endsWith('.svg') && <link rel="icon" type="image/svg+xml" href={`${base}${favicon}`} />}
-{favicon.toLowerCase().endsWith('.png') && <link rel="icon" type="image/png" href={`${base}${favicon}`} />}
-{favicon.toLowerCase().endsWith('.ico') && <link rel="icon" type="image/x-icon" href={`${base}${favicon}`} />}
+<link rel="icon" type="image/png" href={`${base}/favicon-96x96.png`} sizes="96x96" />
+<link rel="icon" type="image/svg+xml" href={`${base}/favicon.svg`} />
+<link rel="shortcut icon" href={`${base}/favicon.ico`} />
+<link rel="apple-touch-icon" sizes="180x180" href={`${base}/apple-touch-icon.png`} />
+<link rel="manifest" href={`${base}/site.webmanifest`} />
 <title>{pageTitle}</title>
 <meta name="description" content={pageDescription} />
 <meta name="author" content={author} />
