@@ -168,20 +168,12 @@ export const themeConfig: ThemeConfig = {
         url: '/atom.xml', // or /rss.xml
       },
       {
-        name: 'GitHub',
-        url: 'https://github.com/radishzzz/astro-theme-retypeset',
-      },
-      {
         name: 'Email',
-        url: 'email@radishzz.cc',
+        url: 'kao@sixnology.com',
       },
       {
         name: 'FB',
-        url: 'https://x.com/radishzz_',
-      },
-      {
-        name: 'LINKEDIN',
-        url: 'https://x.com/radishzz_',
+        url: 'https://www.facebook.com/gao.hong.jie.850142',
       },
     ],
     // year of website start
