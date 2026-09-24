@@ -3,6 +3,7 @@ import type { CollectionEntry } from 'astro:content'
 import type { Language } from '@/i18n/config'
 import { getCollection, render } from 'astro:content'
 import Comment from '@/components/Comment/Index.astro'
+import JsonLd from '@/components/JsonLd.astro'
 import PostDate from '@/components/PostDate.astro'
 import Subscribe from '@/components/Subscribe.astro'
 import TagList from '@/components/TagList.astro'
@@ -136,4 +137,14 @@ const { Content, headings, remarkPluginFrontmatter } = await render(post)
       <Comment />
     </div>
   </article>
+
+  <JsonLd
+    type="article"
+    title={post.data.title}
+    description={description}
+    published={post.data.published}
+    updated={post.data.updated}
+    tags={post.data.tags}
+    image={new URL(`/og/${post.id}.png`, Astro.url.origin)}
+  />
 </Layout>

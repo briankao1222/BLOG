@@ -1,4 +1,5 @@
 ---
+import JsonLd from '@/components/JsonLd.astro'
 import PostList from '@/components/PostList.astro'
 import Subscribe from '@/components/Subscribe.astro'
 import { allLocales } from '@/config'
@@ -36,4 +37,6 @@ const postsByYear = await getPostsByYear(currentLang)
       <PostList posts={posts} lang={currentLang} />
     </section>
   ))}
+
+  <JsonLd type="website" />
 </Layout>

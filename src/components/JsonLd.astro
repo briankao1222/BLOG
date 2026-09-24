@@ -1,0 +1,60 @@
+---
+// schema.org 結構化資料
+//
+// 讓搜尋引擎與 AI 爬蟲不必從內文猜測，就能確認這是誰、在何時、寫了什麼類型的內容。
+// 以獨立元件掛在頁面內而非塞進 <head>，是為了不必為了多帶幾個欄位
+// 去改 Layout 與 Head 的 props 串接（Google 同樣讀得到 body 內的 JSON-LD）。
+import { defaultLocale, themeConfig } from '@/config'
+import { ui } from '@/i18n/ui'
+
+interface Props {
+  type: 'website' | 'article'
+  title?: string
+  description?: string
+  published?: Date
+  updated?: Date
+  tags?: string[]
+  image?: URL | string
+}
+
+const { type, title, description, published, updated, tags, image } = Astro.props
+
+const { url: siteUrl, author, i18nTitle } = themeConfig.site
+const currentUI = ui[defaultLocale as keyof typeof ui] ?? {}
+const siteTitle = i18nTitle ? currentUI.title : themeConfig.site.title
+const siteDescription = i18nTitle ? currentUI.description : themeConfig.site.description
+
+const authorEntity = {
+  '@type': 'Person',
+  'name': author,
+  'url': siteUrl,
+}
+
+const schema = type === 'article'
+  ? {
+      '@context': 'https://schema.org',
+      '@type': 'BlogPosting',
+      'headline': title,
+      'description': description,
+      'datePublished': published?.toISOString(),
+      'dateModified': (updated ?? published)?.toISOString(),
+      'author': authorEntity,
+      'publisher': authorEntity,
+      'mainEntityOfPage': Astro.url.href,
+      'url': Astro.url.href,
+      ...(image && { image: image.toString() }),
+      ...(tags?.length && { keywords: tags.join(', ') }),
+      'inLanguage': defaultLocale,
+    }
+  : {
+      '@context': 'https://schema.org',
+      '@type': 'WebSite',
+      'name': siteTitle,
+      'description': siteDescription,
+      'url': siteUrl,
+      'author': authorEntity,
+      'inLanguage': defaultLocale,
+    }
+---
+
+<script type="application/ld+json" is:inline set:html={JSON.stringify(schema)} />
