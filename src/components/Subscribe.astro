@@ -1,0 +1,147 @@
+---
+// 電子報訂閱表單（MailerLite）
+//
+// 設定方式：MailerLite 後台 > Forms > Embedded forms > HTML code，
+// 搜尋 action= 並把該網址填到下面的 MAILERLITE_FORM_ACTION。
+// 網址格式：https://assets.mailerlite.com/jsonp/<account-id>/forms/<form-id>/subscribe
+//
+// 未填寫時正式站不會渲染，避免半成品上線；本機 dev 仍會顯示以便調整樣式。
+const MAILERLITE_FORM_ACTION = 'https://assets.mailerlite.com/jsonp/2656958/forms/199466616400905998/subscribe'
+
+const shouldRender = Boolean(MAILERLITE_FORM_ACTION) || import.meta.env.DEV
+
+interface Props {
+  // 外距由呼叫端決定：文章／關於頁接在內文之後，首頁則要貼合文章列表的節奏
+  spacing?: string
+  // 精簡版供首頁使用：拿掉裝飾線與標題，視覺層級明確低於文章列表，
+  // 避免被誤認為另一篇文章。
+  compact?: boolean
+}
+
+const { spacing = 'mt-12.6', compact = false } = Astro.props
+
+const copy = {
+  heading: '訂閱電子報',
+  intro: '新文章上線時寄一封信給你，附上一段不會寫在文章裡的話。不轉寄、不推銷，隨時可退訂。',
+  compactIntro: '新文章上線時寄一封信給你，附上一段不會寫在文章裡的話。',
+  placeholder: 'your@email.com',
+  submit: '訂閱',
+  submitting: '送出中',
+  success: '確認信已寄出，請到信箱點擊連結完成訂閱。',
+  error: '送出失敗，請稍後再試一次。',
+  invalidEmail: '請輸入有效的 email 地址。',
+}
+---
+
+{shouldRender && (
+  <section
+    class={spacing}
+    aria-label={compact ? copy.heading : undefined}
+    aria-labelledby={compact ? undefined : 'subscribe-heading'}
+  >
+    {compact
+      ? (
+          <p class="mb-2.5 text-3.5 c-secondary leading-1.75em">
+            <span class="c-primary">{copy.heading}</span>
+            <span class="mx-1.5 c-secondary/40">·</span>
+            {copy.compactIntro}
+          </p>
+        )
+      : (
+          <>
+            <div class="uno-decorative-line" />
+            <h2 id="subscribe-heading" class="mb-2 text-4 c-primary font-bold lg:text-4.5">
+              {copy.heading}
+            </h2>
+            <p class="mb-4 text-3.5 c-secondary leading-1.75em">
+              {copy.intro}
+            </p>
+          </>
+        )}
+
+    <form
+      id="subscribe-form"
+      class="flex flex-col gap-2.5 sm:flex-row"
+      action={MAILERLITE_FORM_ACTION}
+      method="post"
+      novalidate
+    >
+      <label class="sr-only" for="subscribe-email">Email</label>
+      <input
+        id="subscribe-email"
+        type="email"
+        name="fields[email]"
+        required
+        autocomplete="email"
+        placeholder={copy.placeholder}
+        class="flex-1 uno-round-border bg-transparent px-3 py-2 text-3.5 c-primary outline-none transition-colors focus:border-secondary/30 placeholder:c-secondary/50"
+      />
+      <button
+        type="submit"
+        class="uno-round-border bg-secondary/5 px-5 py-2 text-3.5 c-primary transition-colors active:scale-98 hover:bg-secondary/10"
+      >
+        {copy.submit}
+      </button>
+    </form>
+
+    <p
+      id="subscribe-status"
+      class="mt-2.5 hidden text-3.25 c-secondary leading-1.6em"
+      role="status"
+      aria-live="polite"
+    />
+  </section>
+)}
+
+<script is:inline define:vars={{ copy }}>
+  function initSubscribeForm() {
+    const form = document.getElementById('subscribe-form')
+    const status = document.getElementById('subscribe-status')
+    if (!form || !status) {
+      return
+    }
+
+    const emailInput = form.querySelector('#subscribe-email')
+    const submitButton = form.querySelector('button[type="submit"]')
+
+    function showStatus(message) {
+      status.textContent = message
+      status.classList.remove('hidden')
+    }
+
+    form.addEventListener('submit', async (event) => {
+      event.preventDefault()
+
+      if (!emailInput.value || !emailInput.checkValidity()) {
+        showStatus(copy.invalidEmail)
+        emailInput.focus()
+        return
+      }
+
+      submitButton.disabled = true
+      submitButton.textContent = copy.submitting
+
+      try {
+        // MailerLite 的 jsonp 端點不回傳 CORS 標頭，因此以 no-cors 送出；
+        // 讀不到回應內容，但請求本身會送達。
+        await fetch(form.action, {
+          method: 'POST',
+          mode: 'no-cors',
+          body: new FormData(form),
+        })
+        showStatus(copy.success)
+        form.reset()
+      }
+      catch {
+        showStatus(copy.error)
+      }
+      finally {
+        submitButton.disabled = false
+        submitButton.textContent = copy.submit
+      }
+    })
+  }
+
+  initSubscribeForm()
+  document.addEventListener('astro:page-load', initSubscribeForm)
+</script>

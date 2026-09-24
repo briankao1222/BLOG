@@ -1,5 +1,6 @@
 ---
 import PostList from '@/components/PostList.astro'
+import Subscribe from '@/components/Subscribe.astro'
 import { allLocales } from '@/config'
 import { getLangFromLocale, getLangRouteParam } from '@/i18n/lang'
 import Layout from '@/layouts/Layout.astro'
@@ -17,6 +18,9 @@ const postsByYear = await getPostsByYear(currentLang)
 ---
 
 <Layout>
+  <!-- Newsletter -->
+  <Subscribe spacing="mb-9" compact />
+
   <!-- Pinned Posts -->
   {pinnedPosts.length > 0 && (
     <section class="mb-7.5">

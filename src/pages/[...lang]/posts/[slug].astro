@@ -4,6 +4,7 @@ import type { Language } from '@/i18n/config'
 import { getCollection, render } from 'astro:content'
 import Comment from '@/components/Comment/Index.astro'
 import PostDate from '@/components/PostDate.astro'
+import Subscribe from '@/components/Subscribe.astro'
 import TagList from '@/components/TagList.astro'
 import BackButton from '@/components/Widgets/BackButton.astro'
 import TOC from '@/components/Widgets/TOC.astro'
@@ -129,6 +130,8 @@ const { Content, headings, remarkPluginFrontmatter } = await render(post)
           lang={currentLang}
         />
       )}
+      <!-- Newsletter -->
+      <Subscribe />
       <!-- Comment -->
       <Comment />
     </div>

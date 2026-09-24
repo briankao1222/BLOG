@@ -1,5 +1,6 @@
 ---
 import { getCollection, render } from 'astro:content'
+import Subscribe from '@/components/Subscribe.astro'
 import { allLocales } from '@/config'
 import { getLangFromLocale, getLangRouteParam } from '@/i18n/lang'
 import Layout from '@/layouts/Layout.astro'
@@ -25,4 +26,6 @@ const { Content } = aboutEntry ? await render(aboutEntry) : { Content: null }
   <div class="heti">
     {Content && <Content />}
   </div>
+  <!-- Newsletter -->
+  <Subscribe />
 </Layout>
