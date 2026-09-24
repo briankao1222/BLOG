@@ -102,9 +102,9 @@ export const ui: Record<Language, Translation> = {
     toc: '目录',
   },
   'zh-tw': {
-    title: '薄發',
+    title: '即興',
     subtitle: '大B哥的 silly things',
-    description: 'Retypeset是一款基於Astro框架的靜態部落格主題，中文名為重新編排。本主題以活版印字為設計靈感，通過建立全新的視覺規範，對所有頁面進行重新編排，打造紙質書頁般的閱讀體驗，再現版式之美。所見皆為細節，方寸盡顯優雅。',
+    description: '給既看 datasheet 也讀股東協議書的人。技術、商業、創業、合約、稅務、心理——凡是當老闆會遇到的，這裡都寫。20+ 年踩坑實錄，大B哥的即興筆記。',
     posts: '文章',
     tags: '標籤',
     about: '關於',
