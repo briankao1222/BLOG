@@ -27,7 +27,7 @@ export const { getStaticPaths, GET } = await OGImageRoute({
     description: page.description,
     logo: {
       path: './public/icons/og-logo.png', // Required local path and PNG format
-      size: [250],
+      size: [220],
     },
     border: {
       color: [242, 241, 245],
@@ -42,6 +42,7 @@ export const { getStaticPaths, GET } = await OGImageRoute({
       },
       description: {
         families: ['Noto Sans SC'],
+        size: 36,
         color: [72, 71, 74],
         lineHeight: 1.5,
       },

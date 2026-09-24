@@ -2,7 +2,14 @@ import { visit } from 'unist-util-visit'
 
 function createFigure(imgNode, isInGallery = false) {
   const altText = imgNode.properties?.alt
-  const shouldSkipCaption = !altText || altText.startsWith('_')
+  const hasCaptionOptOut = Boolean(altText?.startsWith('_'))
+  const shouldSkipCaption = !altText || hasCaptionOptOut
+
+  // 前綴底線只是「不要顯示圖說」的標記，不該留在 alt 屬性裡被螢幕閱讀器念出來
+  if (hasCaptionOptOut) {
+    imgNode.properties.alt = altText.slice(1)
+  }
+
   if (shouldSkipCaption && !isInGallery) {
     return imgNode
   }

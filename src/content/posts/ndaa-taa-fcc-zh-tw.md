@@ -1,7 +1,7 @@
 ---
 title: 誰能賣設備給 SpaceX？台灣網通廠要過的三道美國關卡
 published: 2026-09-24
-description: FCC 問還能不能在美國賣，NDAA 問裡面有沒有不該有的東西，TAA 問最後在哪裡組成。三道關卡，三個不同的問題。
+description: FCC 問還能不能在美國賣，NDAA 問裡面有沒有不該有的東西，TAA 問最後在哪裡組成。
 tags:
   - 美國法規
   - 網路通訊
